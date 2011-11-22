@@ -1,0 +1,4 @@
+emacs.borderWidth: 1
+emacs.foreground: black
+emacs.background: white
+

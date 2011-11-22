@@ -1,0 +1,55 @@
+function makeprj() {
+    local classpath prj opt force;
+    while getopts "f" opt; do
+	case "$opt" in
+	    (f) force=true;;
+	    (*) ;;
+	esac
+    done
+    shift $(( OPTIND - 1 ));
+
+    classpath="${1:=.classpath}"
+    prj="${2:=prj.el}"
+    project="${3:=.project}"
+
+    if [ ! -z ${force} ]; then
+         rm -f ${prj};
+    fi
+
+    if [ -r ${project} ]; then
+        
+    fi
+    if [ -r ${classpath} ]; then
+	pwd=`pwd`;
+	output=`cat ${classpath}|grep -e 'kind="\(output\)"'|grep -oe 'path="[^"]*"'|grep -oe '"[^"]*"'|sed -e 's#^\w*"#"./#g' -e "s#$pwd##g" -e 's#//#/#g'`
+	src_output=`cat ${classpath}|grep -e 'kind="\(src\)"'|grep -oe 'output="[^"]*"'|grep -oe '"[^"]*"'|sed -e 's#^\w*"#"./#g' -e "s#$pwd##g" -e 's#//#/#g'`;
+        if [ ! -z ${src_output} ]; then
+            output=${src_output}
+        fi
+
+        src=`cat ${classpath}|grep -e 'kind="\(src\)"'|grep -oe 'path="[^"]*"'|grep -oe '"[^"]*"'|sed -e 's#^\w*"#"./#g' -e "s#$pwd##g" -e 's#//#/#g'`
+	src_jars=`cat ${classpath}|grep -e 'kind="\(lib\|output\)"'|grep -oe 'path="[^"]*"'|grep -e '-src-'|grep -oe '"[^"]*"'|sed -e 's#^\w*"#"./#g' -e "s#$pwd##g" -e 's#//#/#g'`
+
+
+ 	libs=`cat ${classpath}|grep -e 'kind="\(lib\|output\)"'|grep -oe 'path="[^"]*"'|grep -ve '-src-'|grep -oe '"[^"]*"'|sed -e 's#^\w*"#"#g' -e "s#$pwd#./#g" -e 's#//#/#g'`
+        
+        if [ ! -r ${prj} ]; then
+            echo "(jde-project-file-version \"1.0\")" >! ${prj};
+            echo "(jde-set-variables" >> ${prj};
+            echo "'(jde-project-root 't)" >> ${prj};
+            echo "'(jde-build-function 'jde-ant-build)" >> ${prj};
+            echo "'(jde-ant-program \"./build.sh\")" >> ${prj};
+            echo "'(jde-ant-enable-find 't)" >> ${prj};
+            echo "'(jde-ant-read-target 't)"  >> ${prj};
+            echo "'(jde-jdk (quote (\"1.6\")))" >> ${prj};
+            echo "'(jde-db-option-connect-socket '(nil \"5005\"))" >> ${prj};
+            echo "'(jde-compile-option-directory ${output})" >> ${prj};
+            echo "'(jde-sourcepath (quote (${src} ${src_jars})))" >> ${prj};
+            echo "'(jde-global-classpath (quote (${src_output} ${libs})))" >> ${prj};
+            echo ")" >> ${prj};
+        fi
+    else
+        ./build.sh classpath;
+        makeprj $classpath $prj $project $force;
+    fi
+}

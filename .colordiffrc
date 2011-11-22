@@ -1,0 +1,14 @@
+banner=no
+color_patches=no
+
+# white, yellow, green, blue,
+# cyan, red, magenta, black,
+# darkwhite, darkyellow, darkgreen,
+# darkblue, darkcyan, darkred,
+# darkmagenta, darkblack
+# Can also specify 'none', 'normal' or 'off'
+plain=white
+newtext=blue
+oldtext=red
+diffstuff=green
+cvsstuff=white

@@ -1,0 +1,10 @@
+escape ^aa
+
+bind c screen 1
+bind ^C screen 1
+
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+
+screen 1

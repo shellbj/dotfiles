@@ -1,0 +1,5 @@
+emacs.borderWidth: 1
+emacs.foreground: black
+emacs.background: white
+emacs.menuBar: off
+emacs.verticalScrollBars: off

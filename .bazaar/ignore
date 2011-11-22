@@ -1,0 +1,11 @@
+*.a
+*.o
+*.py[co]
+*.so
+*.sw[nop]
+*~
+.#*
+[#]*#
+# DVC ignore (don't edit !!)
+.tmp-bzr*
+# end DVC ignore
