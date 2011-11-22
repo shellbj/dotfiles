@@ -51,8 +51,6 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.o' '*?.c~' \
 
 # call ant to get completion targets for only build.sh
 zstyle ":completion::complete:build.sh:*:targets" call-command yes
-# alias build.sh to _ant completion
-compdef _ant build.sh
 
 # change word delimns
 autoload -U select-word-style
