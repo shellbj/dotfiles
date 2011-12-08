@@ -1,0 +1,114 @@
+function prompt_bryan2_help () {
+  cat <<'EOF'
+
+  prompt bryan2 [<color1> [<color2> [<color3> [<color4> [<color5> [<color6> [<color7>]]]]]]]
+
+  defaults are green, green, green, white, red, yellow and red, respectively.
+
+EOF
+}
+
+function prompt_bryan2_preexec () {
+    # Screen window titles as currently running programs
+    if [[ "${TERM}" == "screen-256color" ]]; then
+        local CMD="${1[(wr)^(*=*|sudo|-*)]}"
+        echo -n "\ek$CMD\e\\"
+    fi
+}
+
+function prompt_bryan2_precmd {
+    local exitstatus=$?
+
+    # Terminal width = width - 1 (for lineup)
+    local TERMWIDTH
+    ((TERMWIDTH=${COLUMNS} - 1))
+
+    # Truncate long paths
+    PR_PWDLEN=""
+    local PROMPTSIZE="${#${(%):-(%n@%m:%l)-()}}"
+    local PWDSIZE="${#${(%):-%~}}"
+    if [[ "${PROMPTSIZE} + ${PWDSIZE}" -gt ${TERMWIDTH} ]]; then
+        ((PR_PWDLEN=${TERMWIDTH} - ${PROMPTSIZE}))
+    fi
+
+    psvar=()
+    [[ -n $VIRTUAL_ENV ]] && psvar[9]=$(basename "$VIRTUAL_ENV")
+
+    vcs_info
+    [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+
+}
+
+function prompt_bryan2_setup {
+    if [[ "${terminfo[colors]}" -ge 8 ]]; then
+        autoload colors && colors
+    fi
+
+    local nocolor="%{${terminfo[sgr0]}%}"
+    local -a pcc
+    pcc[1]="%{$nocolor${terminfo[bold]}$fg[${1:-green}]%}"
+    pcc[2]="%{$nocolor${terminfo[bold]}$fg[${2:-green}]%}"
+    pcc[3]="%{$nocolor${terminfo[bold]}$fg[${3:-green}]%}"
+    pcc[4]="%{$nocolor${terminfo[bold]}$fg[${4:-white}]%}"
+    pcc[5]="%{$nocolor${terminfo[bold]}$fg[${5:-red}]%}"
+    pcc[6]="%{$nocolor${terminfo[bold]}$fg[${6:-yellow}]%}"
+    pcc[7]="%{$nocolor${terminfo[bold]}$fg[${7:-red}]%}"
+
+    # Terminal prompt settings
+    case "${TERM}" in
+        dumb) # Simple prompt for dumb terminals
+            unsetopt zle
+            PROMPT='%n@%m:%~%% '
+            ;;
+        linux)
+            PROMPT="$pcc[3]%n$pcc[4]@$pcc[3]%m$pcc[4]:$pcc[6]%l$pcc[4]:$pcc[5]%~$pcc[6]%%$nocolor "
+            ;;
+        *)  # Main prompt
+            add-zsh-hook precmd prompt_bryan2_precmd
+            add-zsh-hook preexec prompt_bryan2_preexec
+
+            # Try to use extended characters to look nicer
+            typeset -A altchar
+            set -A altchar ${(s..)terminfo[acsc]}
+            local PR_SET_CHARSET="%{${terminfo[enacs]}%}"
+            local PR_SHIFT_IN="%{${terminfo[smacs]}%}"
+            local PR_SHIFT_OUT="%{${terminfo[rmacs]}%}"
+            local PR_HBAR="${altchar[q]:--}"
+            local PR_LRCORNER="${altchar[j]:--}"
+            local PR_URCORNER="${altchar[k]:--}"
+            local PR_ULCORNER="${altchar[l]:--}"
+            local PR_LLCORNER="${altchar[m]:--}"
+
+            local ulbox="$pcc[1]$PR_SHIFT_IN$PR_ULCORNER$PR_SHIFT_OUT"
+            local llbox="$pcc[1]$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT"
+            local urbox="$pcc[1]$PR_SHIFT_IN$PR_URCORNER$PR_SHIFT_OUT"
+            local lrbox="$pcc[1]$PR_SHIFT_IN$PR_LRCORNER$PR_SHIFT_OUT"
+            local bar="$pcc[1]$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT"
+   	    local lparen="$pcc[2]("
+   	    local rparen="$pcc[2])"
+
+            local user="$pcc[3]%(!.%SROOT%s.%n)$pcc[4]@$pcc[3]%m"
+            local hist="$pcc[4]:$pcc[6]%l"
+            local _pth='%$PR_PWDLEN<...<%~%<<'
+            local pth="$pcc[5]$_pth" 
+            local rstat="%(!.$pcc[7].$pcc[6])%!$pcc[4]:%(?..$pcc[7]%?$pcc[4]:)%(!.$pcc[7].$pcc[6])%#"
+            local vcs='$psvar[1]'
+            local virtualenv='$psvar[9]'
+            
+            local lineone="$PR_SET_CHARSET$ulbox$lparen$user$hist$rparen$bar$lparen$pth$rparen"
+            local linetwo="$llbox$lparen$rstat$rparen "
+
+# %(3v.$lparen$pcc[4]env: $pcc[6]$virtualenv$rparen)            
+            local rline="\
+%(9v.$lparen$pcc[4]env:$pcc[3]$virtualenv$rparen.)\
+%(9v.%(1v.$bar.).)\
+%(1v.$lparen$pcc[3]$vcs$rparen.)"
+
+            PS1="$lineone
+$linetwo$nocolor"
+            RPS1="$rline$nocolor"
+            ;;
+    esac
+}
+
+prompt_bryan2_setup "$@"

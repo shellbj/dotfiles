@@ -75,21 +75,17 @@ setopt hist_reduce_blanks
 setopt inc_append_history
 setopt extended_history
 setopt transient_rprompt
+setopt prompt_subst
+setopt extended_glob
 
 # colors
 autoload -U colors
 colors
 
 # prompt
-case $TERM in
-    dumb)
-        ;;
-    *)
-        autoload -U promptinit
-        promptinit
-        prompt bryan green blue
-        ;;
-esac
+autoload -U promptinit
+promptinit
+prompt bryan2 green blue
 
 # JDEE project file
 autoload -U makeprj
