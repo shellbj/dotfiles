@@ -82,17 +82,11 @@ setopt extended_glob
 autoload -U colors
 colors
 
-# prompt
-autoload -U promptinit
-promptinit
-prompt bryan2 green blue
-
 # JDEE project file
 autoload -U makeprj
 
 # vcs_info
 autoload -Uz vcs_info
-
 zstyle ':vcs_info:*' actionformats '%F{green}%b%f|%F{red}%a%f%c%u'
 zstyle ':vcs_info:*' formats '%F{green}%b%f%c%u'
 zstyle ':vcs_info:*' stagedstr '%F{red}●%f'
@@ -123,9 +117,15 @@ function _precmd_title()  { _format_title "zsh" "$USER@%m" "%55<...<%~" }
 function _preexec_title() { _format_title "$1"  "$USER@%m" "%35<...<%~" }
 
 # add hooks
+autoload -Uz add-zsh-hook
 add-zsh-hook precmd _precmd_title
 add-zsh-hook preexec _preexec_title
 add-zsh-hook precmd vcs_info
+
+# prompt
+autoload -U promptinit
+promptinit
+prompt bryan2 green blue
 
 ## automatically decide when to page a list of completions
 #LISTMAX=0
