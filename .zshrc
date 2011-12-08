@@ -115,31 +115,10 @@ function _format_title() {
 function _precmd_title()  { _format_title "zsh" "$USER@%m" "%55<...<%~" }
 function _preexec_title() { _format_title "$1"  "$USER@%m" "%35<...<%~" }
 
-# create hooks
-typeset -ga chpwd_functions
-typeset -ga precmd_functions
-typeset -ga preexec_functions
-
-precmd_functions+=_precmd_title
-preexec_functions+=_preexec_title
-
-function precmd() {
-    for x in ${precmd_functions}; do
-        eval $x;
-    done
-}
-
-function preexec() {
-    for x in ${preexec_functions}; do
-        eval $x;
-    done
-}
-
-function chpwd() {
-    for x in ${chpwd_functions}; do
-        eval $x;
-    done
-}
+# add hooks
+add-zsh-hook precmd _precmd_title
+add-zsh-hook preexec _preexec_title
+add-zsh-hook precmd vcs_info
 
 ## automatically decide when to page a list of completions
 #LISTMAX=0
