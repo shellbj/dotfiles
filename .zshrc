@@ -94,6 +94,17 @@ esac
 # JDEE project file
 autoload -U makeprj
 
+# vcs_info
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' actionformats '%F{green}%b%f|%F{red}%a%f%c%u'
+zstyle ':vcs_info:*' formats '%F{green}%b%f%c%u'
+zstyle ':vcs_info:*' stagedstr '%F{red}●%f'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+zstyle ':vcs_info:*' use-prompt-escapes true
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' enable bzr git
+
 # set a formated title 
 function _format_title() {
   # escape '%' chars in $1, make nonprintables visible
