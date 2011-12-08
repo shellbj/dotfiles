@@ -14,8 +14,8 @@ export GRADLE_HOME=/usr/share/gradle
 export PATH=${PATH}:${GRADLE_HOME}/bin
 
 ### Grails
-#export GRAILS_HOME=/usr/share/grails
-#export PATH=${PATH}:${GRAILS_HOME}/bin
+export GRAILS_HOME=/opt/apps/grails-1.3.5
+export PATH=${PATH}:${GRAILS_HOME}/bin
 
 ### Ant
 export ANT_HOME=/usr/local/orbitz-ant2
