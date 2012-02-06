@@ -6,6 +6,26 @@
   ci = commit
   st = status
   br = branch
-  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  l = log --date=short
+  lg = log --graph --date=short
+  hist = log --graph --date=short
+  la = log --date=short --all
+  lga = log --graph --date=short --all
   type = cat-file -t
   dump = cat-file -p
+  unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
+  unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
+
+[color]
+  ui = auto
+
+[format]
+	pretty = %h %ad | %s-%d [%aN]
+        #pretty = %Cred%h%Creset %aN -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset
+
+[mergetool "emerge"]
+	path = /home/bshell/bin/emerge
+[mergetool]
+    prompt = false
+[merge]
+    tool = emerge
