@@ -1,31 +1,32 @@
 [user]
   name = Bryan Shell
   email = bryan.shell@orbitz.com
+
 [alias]
   co = checkout
   ci = commit
   st = status
   br = branch
-  l = log --date=short
-  lg = log --graph --date=short
-  hist = log --graph --date=short
-  la = log --date=short --all
-  lga = log --graph --date=short --all
+
+  hist = log --graph --abbrev=7 --decorate -p
+
+  l = log --graph --abbrev=7 --decorate
+  ll = log --graph --stat --abbrev=7 --decorate
+
+  lg = log --graph  --abbrev-commit --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+  lga = log --all --graph --abbrev-commit --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+
+  la = log --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+  laa = log --date=short --all --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+
   type = cat-file -t
   dump = cat-file -p
+
   unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
   unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 
 [color]
   ui = auto
 
-[format]
-	pretty = %h %ad | %s-%d [%aN]
-        #pretty = %Cred%h%Creset %aN -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset
-
-[mergetool "emerge"]
-	path = /home/bshell/bin/emerge
 [mergetool]
     prompt = false
-[merge]
-    tool = emerge
