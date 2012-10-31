@@ -13,20 +13,28 @@
   l = log --graph --abbrev=7 --decorate
   ll = log --graph --stat --abbrev=7 --decorate
 
-  lg = log --graph  --abbrev-commit --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
-  lga = log --all --graph --abbrev-commit --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+  lg = log --graph  --abbrev-commit --date=short --pretty=graph
+  lga = log --all --graph --abbrev-commit --date=short --pretty=graph
 
-  la = log --date=short --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
-  laa = log --date=short --all --pretty=format:'%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset'
+  la = log --date=short --pretty=graph
+  laa = log --date=short --all --pretty=graph
 
   type = cat-file -t
   dump = cat-file -p
 
+  changelog = log --first-parent --no-merges --pretty=changelog
+
   unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
   unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
+
+[pretty]
+  graph = format:"%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset"
+  gnuchangelog = format:"%ai %aN %n%n%x09* %s%d%n"
+  changelog = format:"  * %s"
 
 [color]
   ui = auto
 
 [mergetool]
-    prompt = false
+  prompt = false
+
