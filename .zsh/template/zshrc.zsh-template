@@ -1,0 +1,25 @@
+# Path to your the configuration.
+ZSH=$HOME/.zsh
+
+# Set name of the theme to load.
+# Look in ~/$ZSH/themes/
+ZSH_THEME="standard"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Controls for vcs_info (see vcs_info_printsys for supported systems)
+# Only check for these backends; for all comment out this line
+VCS_INFO_BACKENDS=(git bzr)
+
+# Which plugins would you like to load? (plugins can be found in ~/$ZSH/plugins/*)
+# Custom plugins may be added to ~/$ZSH/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git rvm)
+
+DEFAULT_USER=shellbj
+
+source $ZSH/init.zsh

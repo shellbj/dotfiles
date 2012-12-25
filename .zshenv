@@ -1,12 +1,12 @@
-zenv_dir=${HOME}/.zsh/env
+# Path to your the configuration.
+ZSH=$HOME/.zsh
 
 # defaults
-if [ -f ${zenv_dir}/zshenv.zsh ]; then
-    . ${zenv_dir}/zshenv.zsh
+if [ -f ${ZSH}/env/zshenv.zsh ]; then
+    source ${ZSH}/env/zshenv.zsh
 fi
 
-HOSTNAME=`hostname`
 # environment specifics
-if [ -f ${zenv_dir}/${HOSTNAME}/zshenv.zsh ]; then
-    . ${zenv_dir}/${HOSTNAME}/zshenv.zsh
+if [ -f ${ZSH}/env/$(hostname)/zshenv.zsh ]; then
+    source ${ZSH}/env/$(hostname)/zshenv.zsh
 fi
