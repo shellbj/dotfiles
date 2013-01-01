@@ -57,9 +57,9 @@ function theme_standard_setup {
 
     local rvm="%(4V.${dec}‹${info}%4v${dec}›.)"
 
-    PROMPT="${user_host_line}${path_info}${rvm}${dec}%E
+    PROMPT="${user_host_line}${path_info}${vcs}${dec}%E
 ${info_line}%# %{${no_color}%k%f%b%}"
-    RPROMPT="${vcs}%{${dec}%}"
+    RPROMPT="${rvm}%{${dec}%}"
     setopt transient_rprompt
 }
 
