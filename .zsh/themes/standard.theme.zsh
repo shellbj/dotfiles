@@ -26,6 +26,15 @@ function theme_standard_precmd {
     if [[ -n $VIRTUAL_ENV ]]; then
         psvar[9]=$(basename "$VIRTUAL_ENV")
     fi
+
+    psvar[8]=""
+    local TERMWIDTH
+    local PROMPTSIZE="${#${(%):-(%1v%2v)(%3v)}}"
+    local PWDSIZE="${#${(%):-%~}}"
+    ((TERMWIDTH=${COLUMNS}-1))
+    if [[ "${PROMPTSIZE} + ${PWDSIZE}" -gt ${TERMWIDTH} ]]; then
+        ((psvar[8]=${TERMWIDTH} - ${PROMPTSIZE}))
+    fi
 }
 add-zsh-hook precmd theme_standard_precmd
 
@@ -51,7 +60,8 @@ function theme_standard_setup {
     
     local user_host_line="%(1V.${dec}‹${error}%n${dec}@%(2V.${error}.${info})%m${dec}›.%(2V.${dec}‹${info}%n${dec}@${error}%m${dec}›.))" # user if not default
 
-    local path_info="${dec}‹${info}%45<...<%~%<<${dec}›"
+    local _pth='%$psvar[8]<..<%~%<<'
+    local path_info="${dec}‹${info}${_pth}${dec}›"
 
     local vcs="%(3V.${dec}‹${info}\${vcs_info_msg_0_}${dec}›.)"
 
