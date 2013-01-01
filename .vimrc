@@ -14,6 +14,8 @@ if v:progname =~? "evim"
   finish
 endif
 
+call pathogen#infect()
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -83,3 +85,7 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 "command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 "	 	\ | wincmd p | diffthis
+
+syntax enable
+set background=dark
+colorscheme solarized
