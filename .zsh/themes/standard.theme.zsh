@@ -1,9 +1,3 @@
-autoload -Uz add-zsh-hook
-
-setopt prompt_percent
-setopt prompt_subst
-unsetopt transient_rprompt
-
 function theme_standard_precmd {
     psvar=()
     vcs_info
@@ -36,41 +30,47 @@ function theme_standard_precmd {
         ((psvar[8]=${TERMWIDTH} - ${PROMPTSIZE}))
     fi
 }
-add-zsh-hook precmd theme_standard_precmd
 
 function theme_standard_setup {
     if [[ "${terminfo[colors]}" -ge 8 ]]; then
         autoload colors && colors
     fi
 
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd theme_standard_precmd
+
+    setopt prompt_percent
+    setopt prompt_subst
+    setopt transient_rprompt
+
     local dec="%{%k%f%b%K{black}%F{cyan}%}"
     local info="%{%B%F{blue}%}"
+    local adorn="%{%B%F{white}%}"
+    local notice="%{%B%F{green}%}"
     local warn="%{%B%F{yellow}%}"
     local error="%{%B%F{red}%}"
 
-    zstyle ':vcs_info:*' actionformats "%{${(%)info}%}%s%{${(%)dec}%}:%{${(%)info}%}%b%{${(%)dec}%}|%{${(%)error}%}%a %{${(%)warn}%}%c%{${(%)dec}%}%{${(%)error}%}%u%{${(%)dec}%}%{${(%)error}%}%m%{${(%)dec}%}"
-    zstyle ':vcs_info:*' formats "%{${(%)info}%}%s%{${(%)dec}%}:%{${(%)info}%}%b%{${(%)dec}%}%{${(%)warn}%}%c%{${(%)dec}%}%{${(%)error}%}%u%{${(%)dec}%}%{${(%)error}%}%m%{${(%)dec}%}"
-    zstyle ':vcs_info:*' stagedstr 'Ⓐ '
-    zstyle ':vcs_info:*' unstagedstr 'Ⓜ '
+    zstyle ':vcs_info:*' actionformats "${info}%s${adorn}:${info}%b${adorn}|${error}%a %c%u%${error}%m"
+    zstyle ':vcs_info:*' formats "${info}%s${adorn}:${info}%b%c%u${error}%m"
+    zstyle ':vcs_info:*' stagedstr "${notice}Ⓐ${dec} "
+    zstyle ':vcs_info:*' unstagedstr "${warn}Ⓜ${dec} "
 
-    local info_line="%(?..${error}✘%?${dec} )" # return status
-    info_line+="%(1j.${error}⚙${dec} .)" # jobs
+    local info_line="%(?..${error}✘${dec} )" # return status
+    info_line+="%(1j.${notice}⚙${dec} .)" # jobs
     info_line+="%(!.${error}☢${dec} .)" # privileged shell
-    info_line+="%(2L.${error}↳${dec} .)" # shell level
+    info_line+="%(2L.${notice}↳${dec} .)" # shell level
     
-    local user_host_line="%(1V.${dec}‹${error}%n${dec}@%(2V.${error}.${info})%m${dec}›.%(2V.${dec}‹${info}%n${dec}@${error}%m${dec}›.))" # user if not default
+    local user_host_line="%(1V.${dec}‹${error}%n${adorn}@%(2V.${error}.${notice})%m${dec}›.%(2V.${dec}‹${notice}%n${adorn}@${error}%m${dec}›.))" # user if not default
 
-    local _pth='%$psvar[8]<..<%~%<<'
-    local path_info="${dec}‹${info}${_pth}${dec}›"
+    local path_info="${dec}‹${info}%\${psvar[8]}<..<%~%<<${dec}›"
 
     local vcs="%(3V.${dec}‹${info}\${vcs_info_msg_0_}${dec}›.)"
 
     local rvm="%(4V.${dec}‹${info}%4v${dec}›.)"
 
     PROMPT="${user_host_line}${path_info}${vcs}${dec}%E
-${info_line}%# %{${no_color}%k%f%b%}"
-    RPROMPT="${rvm}%{${dec}%}"
-    setopt transient_rprompt
+${info_line}%(!.${error}.${adorn})%#%{${no_color}%k%f%b%} "
+    RPROMPT="${rvm}%{${no_color}%k%f%b%}"
 }
 
 theme_standard_setup
