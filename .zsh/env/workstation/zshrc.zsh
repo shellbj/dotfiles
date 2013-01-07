@@ -6,3 +6,4 @@ compdef _ant build.sh
 
 compdef _sudo root
 
+DEFAULT_USER=bshell
