@@ -2,7 +2,7 @@ LINK = ln -s
 TARGET = $(HOME)
 BASEDIR = $(CURDIR)
 
-ignored_files = . .. .git Makefile
+ignored_files = . .. .git .gitmodules .gitignore Makefile
 all_file_names = $(filter-out $(ignored_files),$(wildcard *)) $(filter-out $(ignored_files),$(wildcard .*))
 all_files = $(patsubst %,$(TARGET)/%,$(all_file_names))
 
