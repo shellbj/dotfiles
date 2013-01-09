@@ -1,0 +1,40 @@
+function gitorious_clone_slug() {
+    local slug=$1
+
+    local git_url="http://git.orbitz.net/$slug.xml"
+    local xml_match="//project/repositories/mainlines/repository"
+    local xml_clone_url="clone_url"
+
+    local -A clone_urls
+    clone_urls=(${="$(curl -s $git_url|xmlstarlet sel -t -m $xml_match -v $xml_clone_url -n)"})
+
+    old_dir=$(pwd)
+    mkdir -p $slug
+    cd $slug
+
+    for i in $clone_urls; do
+        git clone $i
+    done
+
+    cd $old_dir
+}
+
+function gitorious_slugs() {
+    local git_url="http://git.orbitz.net/projects.xml"
+    local xml_match="//project/repositories/mainlines/repository"
+    local xml_clone_url="clone_url"
+
+    local -A clone_urls
+    clone_urls=(${="$(curl -s $git_url|xmlstarlet sel -t -m $xml_match -v $xml_clone_url -n)"})
+
+    old_dir=$(pwd)
+    mkdir -p $slug
+    cd $slug
+
+    for i in $clone_urls; do
+        echo $i
+        git clone $i
+    done
+
+    cd $old_dir
+}

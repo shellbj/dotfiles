@@ -1,0 +1,49 @@
+function _container_stub() {
+    local opt host version base name args="";
+    while getopts "b:h:v:n:" opt; do
+	case "$opt" in
+	    (b) base=${OPTARG};;
+	    (n) name=${OPTARG};;
+	    (h) host=${OPTARG};;
+	    (v) version=${OPTARG};;
+	    (*) args+=" ${OPTARG}";;
+	esac
+    done
+    shift $(( OPTIND - 1 ));
+
+    if [ -z $host ]; then
+	host=$1;
+    fi
+    if [ -z $version ]; then
+	version=$2;
+    fi
+
+    if [ -x "${base}/${host}-${version}/bin/${name}" ]; then
+	echo ${base}/${host}-${version}/bin/${name} $args $*;
+	eval "${base}/${host}-${version}/bin/${name} $args $*";
+    else
+	base=`find ${base} -xdev -type f -path '*/bin/*'  -name ${name}|tail -1`;
+	echo ${base} $args $*;
+	${base} $args $*;
+    fi
+}
+
+function start() {
+    _container_stub -b "/opt/orbitz/atlas" -n "start.py" $*;
+}
+function stop() {
+    _container_stub -b "/opt/orbitz/atlas" -n "stop.py" $*;
+}
+function status() {
+    _container_stub -b "/opt/orbitz/atlas" -n "status.py" $*;
+}
+
+function jstart() {
+    _container_stub -b "/opt/orbitz/jboss" -n "start.py" $*;
+}
+function jstop() {
+    _container_stub -b "/opt/orbitz/jboss" -n "stop.py" $*;
+}
+function jstatus() {
+    _container_stub -b "/opt/orbitz/jboss" -n "status.py" $*;
+}

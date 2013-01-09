@@ -1,0 +1,38 @@
+function copy-config() {
+    local user hostname config sshkey force;
+    while getopts "h:l:c:f:k" opt; do
+	case "$opt" in
+            (h) hostname=${OPTARG};;
+            (l) user=${OPTARG};;
+	    (c) config=${OPTARG};;
+	    (f) sshkey=${OPTARG};;
+            (k) force=true;;
+            (*) ;; # do nothing
+	esac
+    done
+    shift $(( OPTIND - 1 ))
+    user=${user:=${USER}}
+    hostname=${hostname:=$1}
+    config=${config:="${HOME}/.config.tar.bz2"}
+    sshkey=${sshkey:="${HOME}/.ssh/keys/id_dsa"}
+
+    if [[ ! -e ${sshkey} || ! -e ${sshkey}.pub ]]; then
+        echo "$(tput smso) You need matching public and private keys for this to work $(tput rmso)"
+        return 1
+    fi
+
+    ssh -t -q -o "BatchMode=yes" ${user}@${hostname} "echo 2>&1"
+    if [[ $? -ne 0 ]]; then
+        ssh-copy-id -i ${sshkey} ${user}@${hostname} > /dev/null;
+        if [[ $? -ne 0 ]]; then
+            echo "$(tput smso) You need to login first to create a home directory $(tput rmso)";
+            ssh -t -q ${user}@${hostname};
+            ssh-copy-id -i ${sshkey} ${user}@${hostname}  > /dev/null;
+        fi
+    fi
+    ssh -q -o "BatchMode=yes" ${user}@${hostname} "cat .copy-config >/dev/null 2>&1"
+    if [[ $? -ne 0 || ! -z ${force} ]]; then
+        cat ${config} | ssh -q -o "BatchMode=yes" ${user}@${hostname} 'bzcat - | tar xf -'
+    fi
+    ssh -q -o "BatchMode=yes" ${user}@${hostname} "touch .copy-config"
+}
