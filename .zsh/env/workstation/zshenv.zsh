@@ -35,8 +35,8 @@ export HADOOP_HOME=/opt/apps/hadoop-0.20.2
 
 ### Python
 if [[ -s /usr/bin/virtualenvwrapper.sh ]]; then
-    source /usr/bin/virtualenvwrapper.sh
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.6
+    export VIRTUALENVWRAPPER_PYTHON="$(\which python2.6)"
     export WORKON_HOME=$HOME/.virtualenvs
     export VIRTUAL_ENV_DISABLE_PROMPT=true
+    source /usr/bin/virtualenvwrapper.sh
 fi
