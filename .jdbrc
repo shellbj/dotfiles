@@ -1,0 +1,1 @@
+exclude $Proxy* javax.* java.* org.* net.* sun.* com.sun.* edu.* oracle.* com.google.* com.orbitz.container.* com.streambase.* com.mchange.* com.orbitz.monitoring.* com.orbitz.cache.* com.orbitz.logging.* com.orbitz.lapsang.* com.ibatis.* com.tangosol.* com.orbitz.ojf.* 
