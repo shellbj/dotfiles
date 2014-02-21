@@ -7,3 +7,6 @@ compdef _ant build.sh
 compdef _sudo root
 
 DEFAULT_USER=bshell
+
+alias fabric='bash <(curl -s "https://stash.orbitz.net/projects/CD/repos/glu-tools/browse/setup_fabric.sh?raw")'
+alias oldfabric='bash <(curl -s http://git.orbitz.net/ada/glu-tools/blobs/raw/master/setup_fabric.sh)'
