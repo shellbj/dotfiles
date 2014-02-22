@@ -1,5 +1,5 @@
-export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk
-#export PATH=${PATH}:${JAVA_HOME}/bin
+export JAVA_HOME=/opt/java/jdk1.7
+export PATH=${JAVA_HOME}/bin:${PATH}
 
 ### Groovy
 export GROOVY_HOME=/usr/share/groovy
@@ -18,8 +18,8 @@ export ANT_HOME=/usr/share/ant
 #export PATH=${PATH}:${ANT_HOME}/bin
 
 ### Maven2
-export MAVEN_HOME=/usr/share/maven2
-#export PATH=${PATH}:${MAVEN_HOME}/bin
+export MAVEN_HOME=/opt/maven/3.0.5
+export PATH=${PATH}:${MAVEN_HOME}/bin
 
  # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
