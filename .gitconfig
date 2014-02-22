@@ -22,6 +22,8 @@
   type = cat-file -t
   dump = cat-file -p
 
+  ignored = status -s --ignored
+
   changelog = log --first-parent --no-merges --pretty=changelog
 
   unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
@@ -29,6 +31,9 @@
 
   prstash = !"git fetch origin refs/pull-requests/$1/from:pull-requests/$1 # "
   prgitorious = !"git fetch origin refs/merge-requests/$1:merge-requests/$1 # "
+
+	todo  = grep -n --ignore-case -e 'TODO *'
+	fixme = grep -n --ignore-case -e 'FIX: *' -e 'FIXME: *'
 
 [pretty]
   graph = format:"%C(bold red)%h%Creset -%C(bold yellow)%d%Creset %s %C(bold green)(%cd) %C(bold blue)<%aN>%Creset"
