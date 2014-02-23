@@ -18,7 +18,7 @@ VCS_INFO_BACKENDS=(git bzr)
 # Which plugins would you like to load? (plugins can be found in ~/$ZSH/plugins/*)
 # Custom plugins may be added to ~/$ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rvm colored-man colorize docker gitignore jira leiningen vagrant)
+plugins=(git rvm colored-man colorize docker gitignore gradle jira leiningen vagrant)
 
 DEFAULT_USER=shellbj
 
