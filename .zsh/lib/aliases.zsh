@@ -15,6 +15,8 @@ alias et='emacsclient -t'
 
 alias cless='colordiff|less -r'
 
+alias history='fc -il -1000'
+
 if [[ -e /etc/debian_version ]]; then
     if (( EUID != 0 )); then
         alias apt-get='sudo apt-get'
