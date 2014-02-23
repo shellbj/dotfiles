@@ -1,0 +1,31 @@
+# -*- mode: gitignore; -*-
+
+# Emacs #
+#########
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# vim #
+#######
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite

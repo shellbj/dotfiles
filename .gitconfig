@@ -48,3 +48,6 @@
 
 [push]
 	default = simple
+
+[core]
+	excludesfile = /home/shellbj/.gitignore_global
