@@ -21,5 +21,3 @@ export ANT_HOME=/usr/share/ant
 export MAVEN_HOME=/opt/maven/3.0.5
 export PATH=${PATH}:${MAVEN_HOME}/bin
 
- # Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

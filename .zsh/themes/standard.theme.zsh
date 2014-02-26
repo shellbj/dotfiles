@@ -26,6 +26,13 @@ function theme_standard_precmd {
         psvar[8]=$($HOME/.rvm/bin/rvm-prompt 2>/dev/null)
     fi
 
+    if [[ -n "$RBENV_SHELL" ]]; then
+        whence -w rbenv_prompt_info 2>/dev/null 1>/dev/null
+        if [[ $? -eq 0 ]]; then
+            psvar[8]=$(rbenv_prompt_info 2>/dev/null)
+        fi
+    fi
+
     if [[ -n $VIRTUAL_ENV ]]; then
         psvar[9]=$(basename "$VIRTUAL_ENV")
     fi
