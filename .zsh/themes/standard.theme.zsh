@@ -34,7 +34,14 @@ function theme_standard_precmd {
     fi
 
     if [[ -n $VIRTUAL_ENV ]]; then
-        psvar[9]=$(basename "$VIRTUAL_ENV")
+        psvar[9]="venv:$(basename "$VIRTUAL_ENV")"
+    fi
+
+    if [[ -n "$PYENV_SHELL" ]]; then
+        whence -w rbenv_prompt_info 2>/dev/null 1>/dev/null
+        if [[ $? -eq 0 ]]; then
+            psvar[9]+="pyenv:$(pyenv_prompt_info 2>/dev/null)"
+        fi
     fi
 }
 
