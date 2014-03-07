@@ -51,3 +51,5 @@
 
 [core]
 	excludesfile = /home/shellbj/.gitignore_global
+[merge]
+	defaultToUpstream = true
