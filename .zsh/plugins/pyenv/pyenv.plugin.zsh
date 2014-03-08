@@ -6,6 +6,7 @@ for pyenvdir in "${pyenvdirs[@]}" ; do
         FOUND_PYENV=1
         export PYENV_ROOT=$pyenvdir
         export PATH=${pyenvdir}/bin:$PATH
+        export VIRTUAL_ENV_DISABLE_PROMPT=true
         eval "$(pyenv init --no-rehash - zsh)"
 
         function pyenv_prompt_info() {
