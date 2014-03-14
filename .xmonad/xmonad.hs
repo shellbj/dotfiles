@@ -8,6 +8,7 @@ import XMonad.Util.EZConfig
 import qualified Data.Map as M
 
 myManageHook = composeAll [
+  className =? "Xfce4-notifyd" --> doIgnore, -- notifications will steal focus otherwise
   className =? "Wrapper" --> doFloat,
   className =? "MPlayer" --> doFloat,
   className =? "Gimp" --> doFloat,
