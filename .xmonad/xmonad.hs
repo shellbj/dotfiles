@@ -32,15 +32,11 @@ main = xmonad $ xfceConfig {
   }
 
 myXfceKeys (XConfig {modMask = modm}) = M.fromList $ [
-  ((modm,               xK_p), spawn "xfrun4")
-  , ((modm .|. shiftMask, xK_p), spawn "gnome-do")
+  ((modm .|. shiftMask, xK_p), spawn "xfrun4")
+  , ((modm, xK_p), spawn "gnome-do")
   , ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout")
   ]
 
 otherKeys = \c -> mkKeymap c $[
   ("<XF86ScreenSaver>", spawn "xscreensaver-command -lock")
-  , ("M4-p", spawn "xfrun4")
-  , ("M4-P", spawn "gnome-do")
-  , ("M4-Q", spawn "xfce4-session-logout")
   ]
-
