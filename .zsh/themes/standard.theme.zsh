@@ -22,6 +22,13 @@ function theme_standard_precmd {
         ((psvar[7]=${COLUMNS} - ${PROMPTSIZE}))
     fi
 
+    if [[ -n $JENV_ROOT ]]; then
+        whence -w jenv_prompt_info 2>/dev/null 1>/dev/null
+        if [[ $? -eq 0 ]]; then
+            psvar[6]="j:$(jenv_prompt_info 2>/dev/null)"
+        fi
+    fi
+
     if [[ "$(builtin command -v rvm)" =~ rvm && -x $HOME/.rvm/bin/rvm-prompt ]]; then
         psvar[8]="rvm:$($HOME/.rvm/bin/rvm-prompt 2>/dev/null)"
     fi
@@ -81,13 +88,15 @@ function theme_standard_setup {
 
     local vcs="%(3V.${dec}‹${info}\${vcs_info_msg_0_}${dec}›.)"
 
+    local jvm="%(6V.${dec}‹${info}%6v${dec}›.)"
+
     local rvm="%(8V.${dec}‹${info}%8v${dec}›.)"
 
     local venv="%(9V.${dec}‹${info}%9v${dec}›.)"
 
     PROMPT="${user_host_line}${path_info}${vcs}${dec}%E
 ${info_line}%(!.${error}.${adorn})%#%{${reset_color}%k%f%b%} "
-    RPROMPT="${rvm}${venv}%{${reset_color}%k%f%b%}"
+    RPROMPT="${jvm}${rvm}${venv}%{${reset_color}%k%f%b%}"
 }
 
 theme_standard_setup
