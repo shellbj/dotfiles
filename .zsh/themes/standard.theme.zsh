@@ -45,9 +45,9 @@ function theme_standard_precmd {
     fi
 
     if [[ -n "$PYENV_SHELL" ]]; then
-        whence -w rbenv_prompt_info 2>/dev/null 1>/dev/null
+        whence -w pyenv_prompt_info 2>/dev/null 1>/dev/null
         if [[ $? -eq 0 ]]; then
-            psvar[9]+="pyenv:$(pyenv_prompt_info 2>/dev/null)"
+            psvar[9]+="py:$(pyenv_prompt_info 2>/dev/null)"
         fi
     fi
 }
