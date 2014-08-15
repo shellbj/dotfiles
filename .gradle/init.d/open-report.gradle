@@ -1,0 +1,13 @@
+addListener(new TaskExecutionListener() {
+                void beforeExecute(Task task) { }
+                void afterExecute(Task task, TaskState state) {
+                    if (task instanceof Test && state.failure) {
+                        def reportIndex = new File(task.testReportDir, 'index.html')
+                        if (reportIndex.exists()) {
+                            def proc = "xdg-open ${reportIndex.toURI()}".execute()
+                            proc.waitForProcessOutput()
+                            assert proc.exitValue() == 0
+                        }
+                    }
+                }
+            })

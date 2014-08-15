@@ -1,0 +1,12 @@
+allprojects {
+    tasks.withType(Test) {
+        testLogging {
+            events 'skipped', 'failed'
+            exceptionFormat 'short'
+            showCauses = true
+            info {
+                displayGranularity = 0
+            }
+        }
+    }
+}
