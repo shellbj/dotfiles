@@ -5,7 +5,10 @@ allprojects {
             project.apply plugin: 'pmd'
             project.apply plugin: 'findbugs'
             project.apply plugin: 'checkstyle'
-            project.apply plugin: 'eclipse'
+
+            tasks.withType(Compile) {
+                options.deprecation = true
+            }
 
             def checkstyleFile = new File(rootDir, "config/checkstyle.xml")
             if (checkstyleFile.exists()) {
