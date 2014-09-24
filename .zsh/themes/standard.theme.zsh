@@ -36,7 +36,7 @@ function theme_standard_precmd {
     if [[ -n "$RBENV_SHELL" ]]; then
         whence -w rbenv_prompt_info 2>/dev/null 1>/dev/null
         if [[ $? -eq 0 ]]; then
-            psvar[8]+="rbenv:$(rbenv_prompt_info 2>/dev/null)"
+            psvar[8]+="rb:$(rbenv_prompt_info 2>/dev/null)"
         fi
     fi
 
