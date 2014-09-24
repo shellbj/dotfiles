@@ -29,3 +29,11 @@ Session.vim
 *.log
 *.sql
 *.sqlite
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+.loadpath
+.externalToolBuilders/
+*.launch
