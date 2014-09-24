@@ -29,8 +29,8 @@
   unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
   unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 
-  prstash = !"git fetch origin refs/pull-requests/$1/from:pull-requests/$1 # "
-  prgitorious = !"git fetch origin refs/merge-requests/$1:merge-requests/$1 # "
+  pull-request = !"git fetch origin refs/pull-requests/$1/from:pull-requests/$1 # "
+  create-pull-request = !"sh -c 'echo stash pull-request \\$0'"
 
 	todo  = grep -n --ignore-case -e 'TODO *'
 	fixme = grep -n --ignore-case -e 'FIX: *' -e 'FIXME: *'
