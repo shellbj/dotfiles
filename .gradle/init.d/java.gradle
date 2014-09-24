@@ -4,7 +4,7 @@ allprojects {
             project.apply plugin: 'pmd'
             project.apply plugin: 'findbugs'
 
-            tasks.withType(Compile) {
+            tasks.withType(JavaCompile) {
                 options.deprecation = true
             }
 
