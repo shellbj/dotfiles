@@ -50,6 +50,7 @@
 	default = simple
 
 [core]
-	excludesfile = /home/shellbj/.gitignore_global
+	excludesfile = ~/.gitignore
+
 [merge]
 	defaultToUpstream = true
