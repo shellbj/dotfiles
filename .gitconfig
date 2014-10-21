@@ -29,7 +29,7 @@
   unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
   unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
 
-  pull-request = !"git fetch origin refs/pull-requests/$1/from:pull-requests/$1 # "
+  pull-request = !sh -c \"git fetch origin pull-requests/${1}/from:pull-requests/${1}\" -
   create-pull-request = !"sh -c 'echo stash pull-request \\$0'"
 
 	todo  = grep -n --ignore-case -e 'TODO *'
