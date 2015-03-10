@@ -1,0 +1,7 @@
+allprojects {
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin('protobuf')) {
+            protocPath = '/usr/bin/protoc20'
+        }
+    }
+}
