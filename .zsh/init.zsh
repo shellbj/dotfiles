@@ -25,6 +25,7 @@ autoload -U compinit
 compinit -i
 
 # Load all of the plugins that were defined in ~/.zshrc
+zstyle -a ':myzsh:load' plugins 'plugins'
 for plugin ($plugins); do
     if [ -f $ZSH/plugins/$plugin/$plugin.plugin.zsh ]; then
         source $ZSH/plugins/$plugin/$plugin.plugin.zsh
