@@ -1,5 +1,5 @@
 # Path to your the configuration.
-ZSH=$HOME/.zsh
+ZSH=${ZDOTDIR:-$HOME}/.zsh
 
 # Set name of the theme to load.
 # Look in ~/$ZSH/themes/

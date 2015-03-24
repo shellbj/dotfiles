@@ -1,5 +1,5 @@
 # Path to your the configuration.
-ZSH=$HOME/.zsh
+ZSH=${ZDOTDIR:-$HOME}/.zsh
 
 # defaults
 if [ -f ${ZSH}/env/zshenv.zsh ]; then
