@@ -1,3 +1,30 @@
 allprojects {
-    apply plugin: 'eclipse'
+    afterEvaluate { project ->
+        project.apply plugin: 'eclipse'
+
+        if (project.plugins.hasPlugin('protobuf')) {
+            eclipseClasspath.dependsOn generateProto
+        }
+
+        eclipse {
+            classpath {
+                try {
+                    if (project.configurations.getByName('componentTestRuntime')) {
+                        plusConfigurations += [project.configurations.componentTestRuntime]
+                    }
+                } catch (UnknownConfigurationException e) {
+                    // do nothing
+                }
+                try {
+                    if (project.configurations.getByName('simulatorRuntime')) {
+                        plusConfigurations += [project.configurations.simulatorRuntime]
+                    }
+                } catch (UnknownConfigurationException e) {
+                    // do nothing
+                }
+                    }
+                }
+
+    }
+
 }
