@@ -12,6 +12,10 @@ is_plugin() {
   test -f $base_dir/plugins/$name/$name.plugin.zsh \
     || test -f $base_dir/plugins/$name/_$name
 }
+
+# Load all of the plugins that were defined in ~/.zshrc
+zstyle -a ':myzsh:load' plugins 'plugins'
+
 # Add all defined plugins to fpath. This must be done
 # before running compinit.
 for plugin ($plugins); do
@@ -24,8 +28,6 @@ done
 autoload -U compinit
 compinit -i
 
-# Load all of the plugins that were defined in ~/.zshrc
-zstyle -a ':myzsh:load' plugins 'plugins'
 for plugin ($plugins); do
     if [ -f $ZSH/plugins/$plugin/$plugin.plugin.zsh ]; then
         source $ZSH/plugins/$plugin/$plugin.plugin.zsh
