@@ -10,6 +10,10 @@ import XMonad.Layout.PerWorkspace
 import Data.Ratio ((%))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ShowWName
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
+
+import qualified Data.Map as M
 
 myWorkspaces = ["web", "mail", "emacs" ] ++ map show [4..9]
 
@@ -47,6 +51,7 @@ myManageHook = composeAll . concat $
                            ]
 
 myLayoutHook = avoidStruts . smartBorders . showWName
+               $ mkToggle(NBFULL ?? MIRROR ?? EOT)
                $ onWorkspaces ["mail", (myWorkspaces !! 1)] (reflectHoriz $ withIM (1%7) (Title "Buddy List") layout)
                $ layout
                where
@@ -56,10 +61,16 @@ myLayoutHook = avoidStruts . smartBorders . showWName
                  ratio = 1/2
                  delta = 3/100
 
+myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+    [ ((modMask, xK_f), sendMessage $ Toggle NBFULL)
+    , ((modMask .|. shiftMask, xK_f), sendMessage $ Toggle MIRROR)
+    ]
+
 main = xmonad $ xfceConfig {
   manageHook = myManageHook <+> manageHook xfceConfig
   , workspaces = myWorkspaces
   , terminal = "xfce4-terminal"
   , modMask = mod4Mask
   , layoutHook = myLayoutHook
+  , keys = myKeys <+> keys xfceConfig
   }
