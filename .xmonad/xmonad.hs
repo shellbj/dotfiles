@@ -1,17 +1,22 @@
 import XMonad
+
 import XMonad.Config.Xfce
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.ManageDocks
+
 import XMonad.Layout.Reflect
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.Circle
 import XMonad.Layout.PerWorkspace
-import Data.Ratio ((%))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ShowWName
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
+
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
+
+import Data.Ratio ((%))
 
 import qualified Data.Map as M
 
@@ -19,31 +24,28 @@ myWorkspaces = ["web", "mail", "emacs" ] ++ map show [4..9]
 
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-                [ [ className =?  i --> doIgnore | i <- ignores ]                
-                , [ name =? n --> doIgnore | n <- namedIgnores ]
-                , [ className =? cf --> doCenterFloat | cf <- centerFloats ]
-                , [ className =?  f --> doFloat | f <- floats ]
-                , [ className =?  d0 --> doShift (myWorkspaces !! 0) | d0 <- web ]
-                , [ className =?  d1 --> doShift (myWorkspaces !! 1) | d1 <- mail ]
-                , [ className =?  d2 --> doShift (myWorkspaces !! 2) | d2 <- emacs ]
-                ]
+               [ [ isFullscreen --> doFullFloat ]
+               , [ isDialog --> doCenterFloat ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doIgnore | c <- ignores ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doCenterFloat | c <- cfloat ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doFloat | c <- float ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 0) | c <- web ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 1) | c <- mail ]
+               , [ (className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 2) | c <- emacs ]
+               ]
                 where
-                  name = stringProperty "WM_NAME"
                   web = [ "Chromium-browser", "Google-chrome", "chromium-browser", "chromium-dev" ]
                   mail = [ "Pidgin", "Thunderbird" ]
                   emacs = [ "emacs", "Emacs" ]
-                  namedIgnores = [ "Whisker Menu" ]
                   ignores = [ "Xfce4-notifyd"  -- notifications will steal focus otherwise
-                              -- , "Xfdesktop"
-                              -- , "desktop_window"
+                            , "Whisker Menu"
                             ]
-                  centerFloats = [ "Xfce4-appfinder"
-                                 , "Xfrun4"
-                                   -- , "Do"
-                                   -- , "Xfce4-notes"
-                                 ]
-                  floats = [ "MPlayer"
-                             -- , "Wrapper"
+                  cfloat = [ "Xfce4-appfinder"
+                           , "Xfrun4"
+                             -- , "Xfce4-notes"
+                           ]
+                  float = [ "MPlayer"
+                            -- , "Wrapper"
                              -- , "Gimp"
                              -- , "Xfce4-panel"
                              -- , "Xfce4-mcs-manager"
@@ -66,6 +68,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_f), sendMessage $ Toggle MIRROR)
     ]
 
+main :: IO()
 main = xmonad $ xfceConfig {
   manageHook = myManageHook <+> manageHook xfceConfig
   , workspaces = myWorkspaces
