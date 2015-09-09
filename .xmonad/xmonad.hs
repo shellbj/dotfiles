@@ -11,6 +11,8 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.ShowWName
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.ComboP
+import XMonad.Layout.TwoPane
 
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
@@ -54,14 +56,18 @@ myManageHook = composeAll . concat $
 
 myLayoutHook = avoidStruts . smartBorders . showWName
                $ mkToggle(NBFULL ?? MIRROR ?? EOT)
-               $ onWorkspaces ["mail", (myWorkspaces !! 1)] (reflectHoriz $ withIM (1%7) (Title "Buddy List") layout)
+               $ onWorkspaces ["mail", (myWorkspaces !! 1)] imLayout
                $ layout
                where
-                 layout = ( tiled ||| (Mirror tiled) ||| noBorders Full ||| Grid ||| Circle )
+                 stdLayout = tiled ||| (Mirror tiled) ||| Full
+                 layout = stdLayout  ||| Grid ||| Circle
                  tiled = Tall nmaster delta ratio
                  nmaster = 1
                  ratio = 1/2
                  delta = 3/100
+                 imLayout = reflectHoriz $ withIM 0.12 (Role "buddy_list") mailLayout
+                 mailLayout = reflectHoriz $ combineTwoP (TwoPane delta 0.70) ((Mirror tiled) ||| Full) Grid (ClassName "Thunderbird")
+
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask, xK_f), sendMessage $ Toggle NBFULL)
