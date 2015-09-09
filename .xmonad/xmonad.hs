@@ -73,4 +73,5 @@ main = xmonad $ xfceConfig {
   , modMask = mod4Mask
   , layoutHook = myLayoutHook
   , keys = myKeys <+> keys xfceConfig
+  , startupHook = setWMName "LG3D" <+> startupHook xfceConfig -- hack for Java to display correctly
   }
