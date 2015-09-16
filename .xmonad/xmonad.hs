@@ -28,6 +28,7 @@ myManageHook :: ManageHook
 myManageHook = composeAll . concat $
                [ [ isFullscreen --> doFullFloat ]
                , [ isDialog --> doCenterFloat ]
+               , [ stringProperty "WM_WINDOW_ROLE" =? c --> doFloat | c <- isPopups ]
                , [ (className =? c <||> title =? c <||> resource =? c) --> doIgnore | c <- ignores ]
                , [ (className =? c <||> title =? c <||> resource =? c) --> doCenterFloat | c <- cfloat ]
                , [ (className =? c <||> title =? c <||> resource =? c) --> doFloat | c <- float ]
@@ -39,6 +40,7 @@ myManageHook = composeAll . concat $
                   web = [ "Chromium-browser", "Google-chrome", "chromium-browser", "chromium-dev" ]
                   mail = [ "Pidgin", "Thunderbird" ]
                   emacs = [ "emacs", "Emacs" ]
+                  isPopups = [ "pop-up" ]
                   ignores = [ "Xfce4-notifyd"  -- notifications will steal focus otherwise
                             , "Whisker Menu"
                             ]
