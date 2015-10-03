@@ -29,6 +29,7 @@ zstyle ':myzsh:load' plugins \
        'pyenv' \
        'rbenv' \
        'jenv' \
+       'nodenv' \
        'direnv' \
        'vagrant' \
        'stash'
