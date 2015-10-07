@@ -68,7 +68,8 @@ myLayoutHook = avoidStruts . smartBorders . showWName
                  ratio = 1/2
                  delta = 3/100
                  imLayout = reflectHoriz $ withIM 0.12 (Role "buddy_list") mailLayout
-                 mailLayout = reflectHoriz $ combineTwoP (TwoPane delta 0.70) ((Mirror tiled) ||| Full) Grid (ClassName "Thunderbird")
+                 -- mailLayout = reflectHoriz $ combineTwoP (TwoPane delta 0.70) ((Mirror tiled) ||| Full) Grid (ClassName "Thunderbird")
+                 mailLayout = reflectHoriz $ withIM 0.70 (ClassName "Thunderbird") stdLayout
 
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
