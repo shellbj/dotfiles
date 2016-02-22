@@ -15,3 +15,8 @@ fi
 if [ -f ${ZSH}/env/$(hostname)/zshenv.zsh ]; then
     source ${ZSH}/env/$(hostname)/zshenv.zsh
 fi
+
+# private environmental specifics
+if [ -f ${HOME}/.private.zsh ]; then
+    source ${HOME}/.private.zsh
+fi
