@@ -2,13 +2,24 @@
 ## https://github.com/gcuisinier/jenv
 ## http://www.jenv.be
 
+_homebrew-installed() {
+  type brew &> /dev/null
+}
+
 FOUND_JENV=0
-jenvdirs=("$HOME/.jenv" "/usr/local/jenv" "/opt/jenv")
+jenvdirs=("$HOME/.jenv" "/usr/local/jenv" "/opt/jenv" "/usr/local/opt/jenv")
+if _homebrew-installed && jenv_homebrew_path=$(brew --prefix jenv 2>/dev/null); then
+    jenvdirs=($jenv_homebrew_path "${jenvdirs[@]}")
+    unset jenv_homebrew_path
+fi
 
 for jenvdir in "${jenvdirs[@]}" ; do
   if [ -d $jenvdir/bin -a $FOUND_JENV -eq 0 ] ; then
     FOUND_JENV=1
-    export JENV_ROOT=$jenvdir
+    if [[ $JENV_ROOT = '' ]]; then
+      JENV_ROOT=$jenvdir
+    fi
+    export JENV_ROOT
     export PATH=${jenvdir}/bin:$PATH
     eval "$(jenv init --no-rehash - zsh)"
 
