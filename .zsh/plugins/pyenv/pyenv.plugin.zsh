@@ -20,6 +20,7 @@ for pyenvdir in "${pyenvdirs[@]}" ; do
         eval "$(pyenv init - zsh)"
 
         if pyenv commands | command grep -q virtualenv-init; then
+            export PYENV_VIRTUALENV_DISABLE_PROMPT=1
             eval "$(pyenv virtualenv-init - zsh)"
         fi
 
