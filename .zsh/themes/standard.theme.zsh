@@ -47,7 +47,8 @@ function theme_standard_precmd {
     if [[ -n "$PYENV_SHELL" ]]; then
         whence -w pyenv_prompt_info 2>/dev/null 1>/dev/null
         if [[ $? -eq 0 ]]; then
-            psvar[9]+="py:$(pyenv_prompt_info 2>/dev/null)"
+            # pyenv prompt supersedes virtualenv
+            psvar[9]="py:$(pyenv_prompt_info 2>/dev/null)"
         fi
     fi
 }
