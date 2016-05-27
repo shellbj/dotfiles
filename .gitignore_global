@@ -15,6 +15,11 @@
 # flymake-mode
 *_flymake.*
 
+# ensime #
+##########
+.ensime
+.ensime_cache/
+
 # vim #
 #######
 [._]*.s[a-w][a-z]
