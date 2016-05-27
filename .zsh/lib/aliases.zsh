@@ -4,7 +4,7 @@ alias cp='nocorrect cp'       # no spelling correction on cp
 alias mkdir='nocorrect mkdir' # no spelling correction on mkdir
 
 # List direcory contents
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
 alias lsa='ls -lah'
 alias l='ls -lA1'
 alias ll='ls -l'

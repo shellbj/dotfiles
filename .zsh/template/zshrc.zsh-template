@@ -32,7 +32,9 @@ zstyle ':myzsh:load' plugins \
        'nodenv' \
        'direnv' \
        'vagrant' \
-       'stash'
+       'stash' \
+       'brew' \
+       'brew-cask'
 
 DEFAULT_USER=shellbj
 
