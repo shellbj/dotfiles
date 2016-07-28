@@ -42,3 +42,7 @@ Session.vim
 .loadpath
 .externalToolBuilders/
 *.launch
+
+# PMD plugin
+.pmd
+.pmdruleset.xml
