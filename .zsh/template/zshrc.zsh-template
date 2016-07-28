@@ -13,28 +13,33 @@ ZSH_THEME="standard"
 
 # Controls for vcs_info (see vcs_info_printsys for supported systems)
 # Only check for these backends; for all comment out this line
-VCS_INFO_BACKENDS=(git bzr)
+VCS_INFO_BACKENDS=(git)
 
 # Which plugins would you like to load? (plugins can be found in ~/$ZSH/plugins/*)
 # Custom plugins may be added to ~/$ZSH/custom/plugins/
 zstyle ':myzsh:load' plugins \
-       'colored-man' \
+       'aws' \
+       'brew' \
+       'brew-cask' \
+       'colored-man-pages' \
        'colorize' \
        'debian' \
+       'direnv' \
        'docker' \
        'docker-compose' \
        'gitignore' \
+       'golang' \
+       'gpg-agent' \
        'gradle' \
+       'jenv' \
        'jira' \
+       'leiningen' \
+       'mvn' \
+       'nodenv' \
        'pyenv' \
        'rbenv' \
-       'jenv' \
-       'nodenv' \
-       'direnv' \
-       'vagrant' \
        'stash' \
-       'brew' \
-       'brew-cask'
+       'vagrant'
 
 DEFAULT_USER=shellbj
 
