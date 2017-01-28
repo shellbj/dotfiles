@@ -35,6 +35,7 @@ zstyle ':myzsh:load' plugins \
        'jira' \
        'leiningen' \
        'mvn' \
+       'goenv' \
        'nodenv' \
        'pyenv' \
        'rbenv' \
