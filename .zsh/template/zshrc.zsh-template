@@ -19,6 +19,7 @@ VCS_INFO_BACKENDS=(git)
 # Custom plugins may be added to ~/$ZSH/custom/plugins/
 zstyle ':myzsh:load' plugins \
        'aws' \
+       'linuxbrew' \
        'brew' \
        'brew-cask' \
        'colored-man-pages' \
