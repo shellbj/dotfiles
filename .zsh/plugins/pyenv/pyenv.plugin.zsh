@@ -17,19 +17,24 @@ for pyenvdir in "${pyenvdirs[@]}" ; do
         FOUND_PYENV=1
         export PYENV_ROOT=$pyenvdir
         export PATH=${pyenvdir}/bin:$PATH
-        eval "$(pyenv init - zsh)"
 
-        if pyenv commands | command grep -q virtualenv-init; then
-            export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-            eval "$(pyenv virtualenv-init - zsh)"
-        fi
+        function pyenv() {
+            eval "$(command pyenv init - zsh)"
 
-        function pyenv_prompt_info() {
-            echo "$(pyenv version-name)"
+            if pyenv commands | command grep -q virtualenv-init; then
+                export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+                eval "$(pyenv virtualenv-init - zsh)"
+            fi
+
+            function pyenv_prompt_info() {
+                echo "$(pyenv version-name)"
+            }
+
+            pyenv "$@"
         }
     fi
 done
-unset pyenvdir
+unset pyenvdir pyenvdirs
 
 if [ $FOUND_PYENV -eq 0 ] ; then
     function pyenv_prompt_info() { echo "system: $(python -V 2>&1 | cut -f 2 -d ' ')" }

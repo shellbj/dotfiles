@@ -21,14 +21,18 @@ for jenvdir in "${jenvdirs[@]}" ; do
     fi
     export JENV_ROOT
     export PATH=${jenvdir}/bin:$PATH
-    eval "$(jenv init --no-rehash - zsh)"
 
-    function jenv_prompt_info() {
-        echo "$(jenv version-name)"
+    function jenv() {
+        eval "$(command jenv init --no-rehash - zsh)"
+
+        function jenv_prompt_info() {
+            echo "$(jenv version-name)"
+        }
+        jenv "$@"
     }
   fi
 done
-unset jenvdir
+unset jenvdir jenvdirs
 
 if [ $FOUND_JENV -eq 0 ] ; then
   function jenv_prompt_info() { echo "system: $(java -version 2>&1 | cut -f 3 -d ' '|cut -f 2 -d '"'|head -n1)" }
